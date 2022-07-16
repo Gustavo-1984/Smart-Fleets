@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.4
+    restart: always
+    environment:
+      # TZ: "America/Argentina/Buenos_Aires"
+      MONGO_INITDB_ROOT_USERNAME: "devuser"
+      MONGO_INITDB_ROOT_PASSWORD: "devpassword"
+    volumes:
+      - ./mongodata:/data/db
+    ports:
+      - 27017:27017
+
+  emqx:
+    container_name: emqx
+    image: emqx/emqx:4.2.3
+    restart: always
+    ports:
+      - 18083:18083
+      - 8083:8083
+      - 1883:1883
+    environment: 
+      EMQX_LISTENER__TCP__EXTERNAL__MAX_CONNECTIONS: 1000
